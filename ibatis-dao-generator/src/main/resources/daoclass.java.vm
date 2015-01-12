@@ -1,0 +1,41 @@
+#set($pojoName=$classMeta.className)
+package ${classMeta.packageStr}
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import ${classMeta.packageStr}.${pojoName}
+import ${classMeta.packageStr}.Query${pojoName}
+
+/**
+ *@author $classMeta.author
+ *@date $classMeta.date
+ */
+ 
+@Repository
+public class ${pojoName}Dao extends AbstractDao{
+	public void insert${pojoName}(${pojoName} ${pojoName}) {
+		super.insert("${pojoName}.insert" , ${pojoName});
+	}
+
+	public int update${pojoName}(${pojoName} ${pojoName}) {
+		return super.update("${pojoName}.update", ${pojoName});
+	}
+
+	public int delete${pojoName}ById(long id) {
+		return super.delete("${pojoName}.deleteById", id);
+	}
+	
+	public long query${pojoName}Count (Query${pojoName} query${pojoName}) {
+		return super.queryForObject("${pojoName}.queryCount" , query${pojoName});
+	}
+
+	public Order query${pojoName}(Query${pojoName} query${pojoName}) {
+		return super.queryForObject("${pojoName}.queryObject" , query${pojoName});
+	}
+
+	public List<${pojoName}> queryList(Query${pojoName} query${pojoName}) {
+		return super.queryForList("${pojoName}.queryList", query${pojoName});
+	}
+}

@@ -1,0 +1,25 @@
+package $classMeta.packageStr
+
+/**
+ *
+ *@author $classMeta.author
+ *@date $classMeta.date
+ */
+public class $classMeta.className{
+#foreach( $p in $columnMetaList)
+    private $classMeta.getJavaType($p.dbType) $p.columnName;
+#end
+
+#foreach( $p in $columnMetaList)
+   #set($columnName=$p.columnName)
+   #set($javaType=$classMeta.getJavaType($p.dbType))
+   public void set$commonUtils.strFirstCharToUppercase($columnName) ($javaType $columnName){
+   		this.$p.columnName = $p.columnName;
+   }
+   
+   public $javaType get$commonUtils.strFirstCharToUppercase($columnName) (){
+   		return this.columnName;
+   }
+   
+#end
+}

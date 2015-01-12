@@ -1,0 +1,73 @@
+#set($className=$classMeta.className)
+#set($package=$classMeta.packageStr)
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="$package.$className" >
+	<typeAlias alias="$className" type="$package.$className"/>
+	<typeAlias alias="Query$className" type="${package}.Query${className}"/>
+	<insert id="$className$insert" parameterClass="$className">
+	    INSERT INTO `$tableName` (
+#foreach ($c in $columnMetaList)
+#if (!$c.isAutoIncrement())
+           `$c.columnName`,
+#end
+#end
+	    )
+		VALUES (
+#foreach ($c in $columnMetaList)
+#if (!$c.isAutoIncrement())
+		#$c.columnName#,
+#end
+#end
+		);
+	</insert>
+	
+	<update id="${className}.update" parameterClass="$className">
+	    UPDATE `$tableName` SET 
+#foreach ($c in $columnMetaList)
+#set($javaType=$classMeta.getJavaType($c.dbType))
+#if ($javaType == "String")
+	   	<isNotEmpty property="$c.columnName" prepend=",">$c.columnName=#$c.columnName#</isNotEmpty>
+#elseif ($javaType == "int" || $javaType == "long" || $javaType == "short" || $javaType == "float" || $javaType == "double")
+		<isGreaterThan property="$c.columnName" compareValue="-1" prepend=",">$c.columnName=#$c.columnName#</isGreaterThan>
+#end
+#end
+	    WHERE $classMeta.keyProperty=#$classMeta.keyProperty#
+	</update>
+	
+	<delete id="${className}.deleteById" parameterClass="$classMeta.keyJavaType">
+		DELETE FROM `$tableName` WHERE $classMeta.keyProperty=#$classMeta.keyProperty#
+	</delete>
+	
+	<sql id="${className}.where">
+		<dynamic prepend=" WHERE ">
+#foreach ($c in $columnMetaList)
+#set($javaType=$classMeta.getJavaType($c.dbType))
+#if ($javaType == "String")
+	   		<isNotEmpty property="$c.columnName" prepend=" AND ">$c.columnName=#$c.columnName#</isNotEmpty>
+#elseif ($javaType == "int" || $javaType == "long" || $javaType == "short" || $javaType == "float" || $javaType == "double")
+			<isGreaterThan property="$c.columnName" compareValue="-1" prepend=" AND ">$c.columnName=#$c.columnName#</isGreaterThan>
+#end
+#end
+		</dynamic>
+	</sql>
+	
+	<select id="${className}.queryList" parameterClass="Query$className" resultClass="$className">
+		SELECT * FROM $tableName 
+		<include refid="${className}.where"/>
+		<isNotEmpty property="orderStr"> ORDER BY $orderStr$ </isNotEmpty>
+		<isGreaterThan property="limit" compareValue="0" prepend=" "> LIMIT #limit#</isGreaterThan>
+		<isGreaterThan property="offset" compareValue="-1" prepend=" "> OFFSET #offset# </isGreaterThan>
+	</select>
+	
+	<select id="${className}.queryObject" parameterClass="Query$className" resultClass="$className">
+		SELECT * FROM $tableName 
+		<include refid="${className}.where"/>
+	</select>
+	
+	<select id="${className}.queryCount" parameterClass="Query$className" resultClass="java.lang.Long">
+		SELECT COUNT(*) FROM $tableName 
+		<include refid="${className}.where"/>
+	</select>
+</sqlMap>
