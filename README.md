@@ -8,6 +8,8 @@
 使用
 ======
 
+* 默认生成的代码和xml文件在System.getProperty("user.dir")/code-template目录下面 *
+
 ```java
     ClassMeta classMeta = new ClassMeta();
     classMeta.setAuthor("lazy_p");
