@@ -1,12 +1,12 @@
 #set($pojoName=$classMeta.className)
-package ${classMeta.packageStr}
+package ${classMeta.packageStr};
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import ${classMeta.packageStr}.${pojoName}
-import ${classMeta.packageStr}.Query${pojoName}
+import ${classMeta.packageStr}.${pojoName};
+import ${classMeta.packageStr}.Query${pojoName};
 
 /**
  *@author $classMeta.author
@@ -31,7 +31,7 @@ public class ${pojoName}Dao extends AbstractDao{
 		return super.queryForObject("${pojoName}.queryCount" , query${pojoName});
 	}
 
-	public Order query${pojoName}(Query${pojoName} query${pojoName}) {
+	public ${pojoName} query${pojoName}(Query${pojoName} query${pojoName}) {
 		return super.queryForObject("${pojoName}.queryObject" , query${pojoName});
 	}
 
