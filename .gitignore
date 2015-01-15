@@ -2,5 +2,7 @@
 .classpath
 .settings
 
+*.log
+
 target
 code-template
