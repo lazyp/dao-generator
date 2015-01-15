@@ -1,4 +1,4 @@
-package $classMeta.packageStr
+package $classMeta.packageStr;
 
 /**
  *
@@ -18,7 +18,7 @@ public class $classMeta.className{
    }
    
    public $javaType get$commonUtils.strFirstCharToUppercase($columnName) (){
-   		return this.columnName;
+   		return this.$columnName;
    }
    
 #end
