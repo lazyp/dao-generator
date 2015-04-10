@@ -6,7 +6,7 @@
 <sqlMap namespace="$package.$className" >
 	<typeAlias alias="$className" type="$package.$className"/>
 	<typeAlias alias="Query$className" type="${package}.Query${className}"/>
-	<insert id="$className.$insert" parameterClass="$className">
+	<insert id="$className.insert" parameterClass="$className">
 	    INSERT INTO `$tableName` (
 #foreach ($c in $columnMetaList)
 #if (!$c.isAutoIncrement())
