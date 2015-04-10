@@ -13,9 +13,9 @@
 ```java
     ClassMeta classMeta = new ClassMeta();
     classMeta.setAuthor("lazy_p");
-	classMeta.setPackageStr("com.coin.robot.db.meta");
-	classMeta.setKeyProperty("id");
-	classMeta.setKeyJavaType("long");
-	IbatisDaoGenerator daoGen = new IbatisDaoGenerator(classMeta, new String[] { "user", "order", "robot" });
-	daoGen.generate();
+    classMeta.setPackageStr("org.dao.generator.ibatis");
+    classMeta.setKeyProperty("id");
+    classMeta.setKeyJavaType("long");
+    IbatisDaoGenerator daoGen = new IbatisDaoGenerator(classMeta, new String[] { "db_table_name" });
+    daoGen.generate();
 ```
