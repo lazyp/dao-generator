@@ -16,8 +16,8 @@ import org.dao.generator.base.DBHandler;
 import org.dao.generator.base.IDaoGenerator;
 import org.dao.generator.base.TableMeta;
 import org.dao.generator.base.mysql.MySqlDBHandler;
-import org.dao.generator.base.utils.CommonUtils;
 import org.dao.generator.base.utils.PropertiesUtil;
+import org.pretty.common.utils.StrUtils;
 
 /**
  * ibatis dao 生成器
@@ -57,12 +57,8 @@ public class IbatisDaoGenerator implements IDaoGenerator {
 			TableMeta tableMeta = dbHandler.getTableMeta(table);
 
 			// 配置一些class属性信息
-			classMeta.setClassName(CommonUtils.strFirstCharToUppercase(tableMeta.getTableName()));
-			// classMeta.setPackageStr("com.coin.robot.db.meta");
-			// classMeta.setAuthor("lazy_p");
+			classMeta.setClassName(StrUtils.firstCharToUpperCase(tableMeta.getTableName()));
 			classMeta.setDate(DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd"));
-//			classMeta.setKeyProperty("id");
-//			classMeta.setKeyJavaType("long");
 
 			this.generatePojoClassFile(classMeta, tableMeta);
 			this.generateIbatisXmlFile(classMeta, tableMeta);
@@ -77,7 +73,7 @@ public class IbatisDaoGenerator implements IDaoGenerator {
 		vmContext.put("classMeta", classMeta);
 		vmContext.put("tableName", tableMeta.getTableName());
 		vmContext.put("columnMetaList", tableMeta.getColumnMetaList());
-		vmContext.put("commonUtils", new CommonUtils());
+		vmContext.put("strUtils", new StrUtils());
 		pojoVm.merge(vmContext, sw);
 		// System.out.println(sw.toString());
 		this.outDisk(classMeta.getClassName() + "Dao.java", sw.toString());
@@ -90,7 +86,7 @@ public class IbatisDaoGenerator implements IDaoGenerator {
 		vmContext.put("classMeta", classMeta);
 		vmContext.put("tableName", tableMeta.getTableName());
 		vmContext.put("columnMetaList", tableMeta.getColumnMetaList());
-		vmContext.put("commonUtils", new CommonUtils());
+		vmContext.put("strUtils", new StrUtils());
 		pojoVm.merge(vmContext, sw);
 		// System.out.println(sw.toString());
 		this.outDisk(classMeta.getClassName() + ".xml", sw.toString());
@@ -102,7 +98,7 @@ public class IbatisDaoGenerator implements IDaoGenerator {
 		Context vmContext = new VelocityContext();
 		vmContext.put("classMeta", classMeta);
 		vmContext.put("columnMetaList", tableMeta.getColumnMetaList());
-		vmContext.put("commonUtils", new CommonUtils());
+		vmContext.put("strUtils", new StrUtils());
 		pojoVm.merge(vmContext, sw);
 
 		outDisk(classMeta.getClassName() + ".java", sw.toString());
@@ -135,11 +131,11 @@ public class IbatisDaoGenerator implements IDaoGenerator {
 
 	public static void main(String[] args) {
 		ClassMeta classMeta = new ClassMeta();
-		classMeta.setAuthor("lazy_p");
-		classMeta.setPackageStr("com.coin.robot.db.meta");
+		classMeta.setAuthor("author");
+		classMeta.setPackageStr("package");
 		classMeta.setKeyProperty("id");
-		classMeta.setKeyJavaType("long");
-		IbatisDaoGenerator daoGen = new IbatisDaoGenerator(classMeta, new String[] { "user", "order", "robot" });
+		classMeta.setKeyJavaType("int");
+		IbatisDaoGenerator daoGen = new IbatisDaoGenerator(classMeta, new String[] { "dbTableName" });
 		daoGen.generate();
 	}
 }

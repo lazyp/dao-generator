@@ -13,11 +13,11 @@ public class $classMeta.className{
 #foreach( $p in $columnMetaList)
    #set($columnName=$p.columnName)
    #set($javaType=$classMeta.getJavaType($p.dbType))
-   public void set$commonUtils.strFirstCharToUppercase($columnName) ($javaType $columnName){
+   public void set$strUtils.firstCharToUpperCase($columnName) ($javaType $columnName){
    		this.$p.columnName = $p.columnName;
    }
    
-   public $javaType get$commonUtils.strFirstCharToUppercase($columnName) (){
+   public $javaType get$strUtils.firstCharToUpperCase($columnName) (){
    		return this.$columnName;
    }
    

@@ -9,8 +9,23 @@
 		<module>ibatis-dao-generator</module>
 		<module>dao-generator-base</module>
 	</modules>
-
+	
+	<repositories>
+		<repository>
+			<id>nexus-osc-thirdparty</id>
+			<name>nexus osc thirdparty</name>
+			<url>http://maven.oschina.net/content/repositories/thirdparty/</url>
+		</repository>
+	</repositories>
+	
 	<dependencies>
+		<dependency>
+			<groupId>org.pretty.common</groupId>
+			<artifactId>pretty-common-utils</artifactId>
+			<version>1.0</version>
+			<classifier>jar</classifier>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
